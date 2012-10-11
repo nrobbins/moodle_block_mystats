@@ -1,0 +1,1 @@
+﻿The My Stats block is still in early alpha. Many parts are unfinished and/or unstable. Use at your own risk.

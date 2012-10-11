@@ -1,0 +1,8 @@
+﻿.block_mystats h3{}
+.block_mystats p{padding:0}
+.block_mystats a{}
+.block_mystats .mystats_section{
+float:left;
+margin:5px;
+padding:5px;
+}
