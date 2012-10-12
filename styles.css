@@ -1,5 +1,5 @@
 ﻿.block_mystats h3{}
-.block_mystats p{padding:0}
+.block_mystats p{padding:0;margin:0;}
 .block_mystats a{}
 .block_mystats .mystats_section{
 float:left;
