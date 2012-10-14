@@ -72,17 +72,17 @@ class block_mystats extends block_base {
 				//Forum Stats
 				$this->content->text  .= '<div id="mystats_forums" class="mystats_section"><h3>Forums</h3>';
 				$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/mod/forum/user.php?id='.$userId.'">Forum Posts</a>: '.$forumPosts.'</p>';
-				$this->content->text  .= '<p>Topics Started: '.$newTopics.'</p>';
-				$this->content->text  .= '<p>Replies: '.($forumPosts-$newTopics).'</p>';
+				//$this->content->text  .= '<p>Topics Started: '.$newTopics.'</p>';
+				//$this->content->text  .= '<p>Replies: '.($forumPosts-$newTopics).'</p>';
 				$this->content->text  .= block_mystats_forum($newTopics,($forumPosts-$newTopics));
 				$this->content->text  .= '</div>';
 
 				//Blog Stats
 				$this->content->text  .= '<div id="mystats_blogs" class="mystats_section"><h3>Blogs</h3>';
 				$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/blog/index.php?userid='.$userId.'">Blog Posts</a>: '.$blogPosts.'</p>';
-				$this->content->text  .= '<p>Associated with a Course: '.$coursePosts.'</p>';
-				$this->content->text  .= '<p>Associated with an Activity: '.$modPosts.'</p>';
-				//$this->content->text  .= block_mystats_blog($blogPosts,$coursePosts,$modPosts);
+				//$this->content->text  .= '<p>Associated with a Course: '.$coursePosts.'</p>';
+				//$this->content->text  .= '<p>Associated with an Activity: '.$modPosts.'</p>';
+				$this->content->text  .= block_mystats_blog($blogPosts,$coursePosts,$modPosts);
 				$this->content->text  .= '</div>';
 				//Message Stats
 				$this->content->text  .= '<div id="mystats_messages" class="mystats_section"><h3>Messages</h3>';
