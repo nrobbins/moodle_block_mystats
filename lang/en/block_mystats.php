@@ -24,24 +24,34 @@
  */
 
 $string['pluginname'] = 'My Stats';
-//Setting Strings
 $string['blocktitle'] = 'Block Title';
 $string['blocktitle_help'] = 'The title that appears in the heading of the block';
+//Setting Strings
 $string['blocksettings'] = 'My Stats Settings';
-$string['allowuserconfig'] = 'Allow user configuration';
-$string['allowuserconfiglink'] = 'user configuration';
 $string['adminheading'] = 'My Stats Global Settings';
 $string['admintext'] = 'These settings affect all instances of the My Stats block.';
+$string['allowuserconfig'] = 'Allow user configuration';
+$string['allowuserconfigtext'] = 'Allow users to choose which sections are displayed (of those allowed in these settings)';
+$string['showforum'] = 'Forums';
+$string['showforumtext'] = 'Show forum statistics';
+$string['showblog'] = 'Blogs';
+$string['showblogtext'] = 'Show blog statistics';
+$string['showmsg'] = 'Messages';
+$string['showmsgtext'] = 'Show message statistics';
+$string['showfile'] = 'Files';
+$string['showfiletext'] = 'Show file statistics';
+$string['showquiz'] = 'Quizzes';
+$string['showquiztext'] = 'Show quiz statistics';
 //Forum Strings
 $string['forums'] = 'Forums';
-$string['forumposts'] = 'Forum Posts';
+$string['forumposts'] = 'All Forum Posts';
 $string['forumtopics'] = 'Topics Started';
 $string['forumreplies'] = 'Replies';
 //Blog Strings
 $string['blogs'] = 'Blogs';
-$string['blogposts'] = 'Blog Posts';
-$string['blogcourse'] = 'Associated with a Course';
-$string['blogactivity'] = 'Associated with an Activity';
+$string['blogposts'] = 'All Blog Posts';
+$string['blogcourse'] = 'Related to a Course';
+$string['blogactivity'] = 'Related to an Activity';
 //Message Strings
 $string['messages'] = 'Messages';
 $string['messagesent'] = 'Messages Sent';

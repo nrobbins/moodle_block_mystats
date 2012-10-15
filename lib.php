@@ -4,7 +4,19 @@ include("pChart2.1.3/class/pData.class.php");
 include("pChart2.1.3/class/pDraw.class.php");
 include("pChart2.1.3/class/pPie.class.php");
 include("pChart2.1.3/class/pImage.class.php");
-function block_mystats_forum($allTopics=0,$allReplies=0,$allTopicsString="New Topics",$allRepliesString="Replies"){
+/**
+ *General Functions
+ */
+function block_mystats_avg($scores){
+
+}
+function block_mystats_highscore($scores){
+
+}
+/**
+ *Forum Functions
+ */
+function block_mystats_forum_chart($allTopics=0,$allReplies=0,$allTopicsString="New Topics",$allRepliesString="Replies"){
 	/* pData object creation */
 	$MyForumData = new pData();   
 	/* Data definition */
@@ -19,14 +31,17 @@ function block_mystats_forum($allTopics=0,$allReplies=0,$allTopicsString="New To
 	/* Enable shadow computing */ 
 	$myForumPicture->setShadow(FALSE);
 	/* Set the default font properties */ 
-	$myForumPicture->setFontProperties(array("FontName"=>"../blocks/mystats/pChart2.1.3/fonts/Forgotte.ttf","FontSize"=>14,"R"=>80,"G"=>80,"B"=>80));
+	$myForumPicture->setFontProperties(array("FontName"=>"../blocks/mystats/pChart2.1.3/fonts/Forgotte.ttf","FontSize"=>13,"R"=>80,"G"=>80,"B"=>80));
 	/* Draw a splitted pie chart */ 
-	$forumPieChart->draw3DPie(170,100,array("Radius"=>80,"DrawLabels"=>TRUE,"DataGapAngle"=>10,"DataGapRadius"=>6,"Border"=>TRUE));
+	$forumPieChart->draw3DPie(175,100,array("Radius"=>80,"DrawLabels"=>TRUE,"DataGapAngle"=>10,"DataGapRadius"=>6,"Border"=>TRUE));
 	/* Render the picture */
 	$myForumPicture->Render("forum.png");
 	return '<img src="forum.png" alt="'.$allTopicsString.': '.$allTopics.', '.$allRepliesString.': '.$allReplies.'">';
 }
-function block_mystats_blog($allPosts=0,$assocCourse=0,$assocMod=0,$allPostsString="All Blog Posts",$assocCourseString="Related to Courses",$assocModString="Related to Activities"){
+/**
+ *Blog Functions
+ */
+function block_mystats_blog_chart($allPosts=0,$assocCourse=0,$assocMod=0,$allPostsString,$assocCourseString,$assocModString){
 	$myBlogData = new pData();
 	$myBlogData->addPoints(array($allPosts,$assocCourse,$assocMod),"Serie1");
 	$myBlogData->setSerieDescription("Serie1","Posts");
@@ -66,4 +81,7 @@ function block_mystats_blog($allPosts=0,$assocCourse=0,$assocMod=0,$allPostsStri
 	$myBlogPicture->drawBarChart($blogConfig);
 	$myBlogPicture->Render("blog.png");
 	return '<img src="blog.png" alt="'.$allPostsString.': '.$allPosts.', '.$assocCourseString.': '.$assocCourse.', '.$assocModString.': '.$assocMod.'">';
+}
+class stat_group {
+	
 }
