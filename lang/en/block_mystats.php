@@ -45,7 +45,7 @@ $string['showquiztext'] = 'Show quiz statistics';
 //Forum Strings
 $string['forums'] = 'Forums';
 $string['forumposts'] = 'All Forum Posts';
-$string['forumtopics'] = 'Topics Started';
+$string['forumtopics'] = 'New Topics';
 $string['forumreplies'] = 'Replies';
 //Blog Strings
 $string['blogs'] = 'Blogs';
@@ -65,3 +65,8 @@ $string['filesubmitted'] = 'Submitted for Assignments';
 //Quiz Strings
 $string['quizzes'] = 'Quizzes';
 $string['quizattempt'] = 'Quiz Attempts';
+$string['quizavgscore'] = 'Average Score';
+$string['quizhighscore'] = 'Highest Score';
+$string['quizscores'] = 'Quiz Scores';
+$string['scorepercent'] = 'Score Percent';
+$string['nogrades'] = 'No grades recorded';

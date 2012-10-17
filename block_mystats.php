@@ -52,7 +52,14 @@ class block_mystats extends block_base {
         }
 				require_once($CFG->dirroot . '/blocks/mystats/lib.php');
 				
-				$userId = $USER->id;
+				$location = $this->page->bodyid;
+				if($location == 'page-my-index'){
+					$userId = $USER->id;
+					$private = true;
+				} else {
+					$userId = $_GET['id'];
+					$private = false;
+				}
 				
 				$userConfig = get_config('mystats','allow_user_config');
 				$showForum = get_config('mystats','show_stats_forum');
@@ -63,6 +70,7 @@ class block_mystats extends block_base {
 				
         $this->content = new stdClass;
 				$this->content->text  = '';
+				//$this->content->text .= print_r($this->page->bodyid,true);
 				/**
 				 *Forum Stats
 				 */
@@ -96,6 +104,26 @@ class block_mystats extends block_base {
 					$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/blog/index.php?userid='.$userId.'">'.get_string('blogposts','block_mystats').'</a>: '.$blogPosts.'</p>';
 					$this->content->text  .= block_mystats_blog_chart($blogPosts,$coursePosts,$modPosts,get_string('blogposts','block_mystats'),get_string('blogcourse','block_mystats'),get_string('blogactivity','block_mystats'));
 					$this->content->text  .= '</div>';
+				}
+				
+				/**
+				 *Quiz Stats
+				 */
+
+				if($showQuiz&&$private){ //Do not show quiz grades outside the My Courses page
+				//get records
+				$quizAttempts = count($DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId)));
+				$quizScores = $DB->get_records_sql('SELECT grade FROM {quiz_grades} WHERE userid = ?', array($userId));
+				$quizAverage = block_mystats_avg($quizScores);
+				$quizHighest = block_mystats_highscore($quizScores);
+
+				//output stats
+				$this->content->text  .= '<div id="mystats_quizzes" class="mystats_section"><h3>'.get_string('quizzes','block_mystats').'</h3>';
+				$this->content->text  .= '<p>'.get_string('quizattempt','block_mystats').': '.$quizAttempts.'</p>';
+				//$this->content->text  .= '<p>'.get_string('quizavgscore','block_mystats').': '.$quizAverage.'</p>';
+				//$this->content->text  .= '<p>'.get_string('quizhighscore','block_mystats').': '.$quizHighest.'</p>';
+				$this->content->text  .= block_mystats_quiz_chart($quizAverage,$quizHighest,get_string('quizavgscore','block_mystats'),get_string('quizhighscore','block_mystats'),get_string('quizscores','block_mystats'),get_string('scorepercent','block_mystats'));
+				$this->content->text  .= '</div>';
 				}
 				
 				/**
@@ -134,22 +162,6 @@ class block_mystats extends block_base {
 					$this->content->text  .= '</div>';
 				}
 				
-				/**
-				 *Quiz Stats
-				 */
-
-				if($showQuiz){
-				//get records
-				$quizAttempts = count($DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId)));
-				$quizScores = $DB->get_records_sql('SELECT grade FROM {quiz_grades} WHERE userid = ?', array($userId));
-				$quizAvg = block_mystats_avg($quizScores);
-				$quizHighscore = block_mystats_highscore($quizScores);
-
-				//output stats
-				$this->content->text  .= '<div id="mystats_quizzes" class="mystats_section"><h3>Quizzes</h3>';
-				$this->content->text  .= '<p>Quiz Attempts: '.$quizAttempts.'</p>';
-				$this->content->text  .= '</div>';
-				}
 				
         $this->content->footer = '<div class="clearfix"></div>';
 				return $this->content;
