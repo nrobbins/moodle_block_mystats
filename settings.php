@@ -12,7 +12,7 @@ if ($ADMIN->fulltree) {
 		'mystats/allow_user_config',
 		get_string('allowuserconfig', 'block_mystats'),
     get_string('allowuserconfigtext', 'block_mystats'),
-		0
+		1
 	));
   $settings->add(new admin_setting_configcheckbox(
 		'mystats/show_stats_forum',
@@ -27,22 +27,34 @@ if ($ADMIN->fulltree) {
 		1
 	));
   $settings->add(new admin_setting_configcheckbox(
+		'mystats/show_stats_quiz',
+		get_string('showquiz', 'block_mystats'),
+    get_string('showquiztext', 'block_mystats'),
+		1
+	));
+  $settings->add(new admin_setting_configcheckbox(
+		'mystats/show_stats_lesson',
+		get_string('showlesson', 'block_mystats'),
+    get_string('showlessontext', 'block_mystats'),
+		1
+	));
+  $settings->add(new admin_setting_configcheckbox(
+		'mystats/show_stats_assignment',
+		get_string('showassignment', 'block_mystats'),
+    get_string('showassignmenttext', 'block_mystats'),
+		1
+	));
+  $settings->add(new admin_setting_configcheckbox(
 		'mystats/show_stats_msg',
 		get_string('showmsg', 'block_mystats'),
     get_string('showmsgtext', 'block_mystats'),
-		1
+		0
 	));
   $settings->add(new admin_setting_configcheckbox(
 		'mystats/show_stats_file',
 		get_string('showfile', 'block_mystats'),
     get_string('showfiletext', 'block_mystats'),
-		1
-	));
-  $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_quiz',
-		get_string('showquiz', 'block_mystats'),
-    get_string('showquiztext', 'block_mystats'),
-		1
+		0
 	));
 }
 

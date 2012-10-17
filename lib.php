@@ -155,8 +155,8 @@ function block_mystats_quiz_chart($avg,$high,$strAvg,$strHigh,$strTitle,$strScal
 	, "Family"=>LEGEND_FAMILY_CIRCLE
 	);
 	$myQuizPicture->drawLegend(240,16,$quizConfig);
-	$myQuizPicture->Render("quiz.png");
-	return '<img src="quiz.png" alt="'.$strAvg.': '.$avg.', '.$strHigh.': '.$high.'">';
+	$myQuizPicture->Render("$strTitle.png");
+	return '<img src="'.$strTitle.'.png" alt="'.$strAvg.': '.$avg.', '.$strHigh.': '.$high.'">';
 }
 class stat_group {
 	

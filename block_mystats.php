@@ -35,6 +35,41 @@ class block_mystats extends block_base {
 			} else {
 				$this->title = get_string('pluginname', 'block_mystats');
 			}
+			if (!empty($this->config->forum)){
+				$this->userShowForum = $this->config->forum;
+			} else {
+				$this->userShowForum = 1;
+			}
+			if (!empty($this->config->blog)){
+				$this->userShowBlog = $this->config->blog;
+			} else {
+				$this->userShowBlog = 1;
+			}
+			if (!empty($this->config->quiz)){
+				$this->userShowQuiz = $this->config->quiz;
+			} else {
+				$this->userShowQuiz = 1;
+			}
+			if (!empty($this->config->lesson)){
+				$this->userShowLesson = $this->config->lesson;
+			} else {
+				$this->userShowLesson = 1;
+			}
+			if (!empty($this->config->assignment)){
+				$this->userShowAssignment = $this->config->assignment;
+			} else {
+				$this->userShowAssignment = 1;
+			}
+			if (!empty($this->config->msg)){
+				$this->userShowMsg = $this->config->msg;
+			} else {
+				$this->userShowMsg = 1;
+			}
+			if (!empty($this->config->file)){
+				$this->userShowFile = $this->config->file;
+			} else {
+				$this->userShowFile = 1;
+			}
 		}
     function applicable_formats() {
         return array(
@@ -64,9 +99,17 @@ class block_mystats extends block_base {
 				$userConfig = get_config('mystats','allow_user_config');
 				$showForum = get_config('mystats','show_stats_forum');
 				$showBlog = get_config('mystats','show_stats_blog');
+				$showQuiz = get_config('mystats','show_stats_quiz');
+				$showLesson = get_config('mystats','show_stats_lesson');
+				$showAssignment = get_config('mystats','show_stats_assignment');
 				$showMsg = get_config('mystats','show_stats_msg');
 				$showFile = get_config('mystats','show_stats_file');
-				$showQuiz = get_config('mystats','show_stats_quiz');
+				
+				$this->userShowForum = $this->config->forum;
+				$this->userShowBlog = $this->config->blog;
+				$this->userShowQuiz = $this->config->quiz;
+				$this->userShowMsg = $this->config->msg;
+				$this->userShowFile = $this->config->file;
 				
         $this->content = new stdClass;
 				$this->content->text  = '';
@@ -76,17 +119,19 @@ class block_mystats extends block_base {
 				 */
 				
 				if($showForum){
-					//get records
-					$forumPosts = count($DB->get_records_sql('SELECT * FROM {forum_posts} WHERE userid = ?', array($userId)));
-					$newTopics = count($DB->get_records_sql('SELECT * FROM {forum_posts} WHERE userid = ? AND parent=?', array($userId,0)));
-					$forumReplies = ($forumPosts-$newTopics);
-					$forumStats = array($newTopics,$forumReplies);
+					if((($userConfig)&&($this->userShowForum))||(!$userConfig)){
+						//get records
+						$forumPosts = count($DB->get_records_sql('SELECT * FROM {forum_posts} WHERE userid = ?', array($userId)));
+						$newTopics = count($DB->get_records_sql('SELECT * FROM {forum_posts} WHERE userid = ? AND parent=?', array($userId,0)));
+						$forumReplies = ($forumPosts-$newTopics);
+						$forumStats = array($newTopics,$forumReplies);
 
-					//output stats
-					$this->content->text  .= '<div id="mystats_forums" class="mystats_section"><h3>'.get_string('forums','block_mystats').'</h3>';
-					$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/mod/forum/user.php?id='.$userId.'">'.get_string('forumposts','block_mystats').'</a>: '.$forumPosts.'</p>';
-					$this->content->text  .= block_mystats_forum_chart($newTopics,$forumReplies,get_string('forumtopics','block_mystats'),get_string('forumreplies','block_mystats'));
-					$this->content->text  .= '</div>';
+						//output stats
+						$this->content->text  .= '<div id="mystats_forums" class="mystats_section"><h3>'.get_string('forums','block_mystats').'</h3>';
+						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/mod/forum/user.php?id='.$userId.'">'.get_string('forumposts','block_mystats').'</a>: '.$forumPosts.'</p>';
+						$this->content->text  .= block_mystats_forum_chart($newTopics,$forumReplies,get_string('forumtopics','block_mystats'),get_string('forumreplies','block_mystats'));
+						$this->content->text  .= '</div>';
+					}
 				}
 
 				/**
@@ -94,16 +139,18 @@ class block_mystats extends block_base {
 				 */
 
 				if($showBlog){
-				//get records
-					$blogPosts = count($DB->get_records_sql('SELECT * FROM {post} WHERE userid = ?', array($userId)));
-					$coursePosts = count($DB->get_records_sql('SELECT * FROM {post} WHERE userid = ? AND courseid != ?', array($userId,0)));
-					$modPosts = count($DB->get_records_sql('SELECT * FROM {post} WHERE userid = ? AND moduleid != ?', array($userId,0)));
+					if((($userConfig)&&($this->userShowBlog))||(!$userConfig)){
+						//get records
+						$blogPosts = count($DB->get_records_sql('SELECT * FROM {post} WHERE userid = ?', array($userId)));
+						$coursePosts = count($DB->get_records_sql('SELECT * FROM {post} WHERE userid = ? AND courseid != ?', array($userId,0)));
+						$modPosts = count($DB->get_records_sql('SELECT * FROM {post} WHERE userid = ? AND moduleid != ?', array($userId,0)));
 
-					//output stats
-					$this->content->text  .= '<div id="mystats_blogs" class="mystats_section"><h3>'.get_string('blogs','block_mystats').'</h3>';
-					$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/blog/index.php?userid='.$userId.'">'.get_string('blogposts','block_mystats').'</a>: '.$blogPosts.'</p>';
-					$this->content->text  .= block_mystats_blog_chart($blogPosts,$coursePosts,$modPosts,get_string('blogposts','block_mystats'),get_string('blogcourse','block_mystats'),get_string('blogactivity','block_mystats'));
-					$this->content->text  .= '</div>';
+						//output stats
+						$this->content->text  .= '<div id="mystats_blogs" class="mystats_section"><h3>'.get_string('blogs','block_mystats').'</h3>';
+						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/blog/index.php?userid='.$userId.'">'.get_string('blogposts','block_mystats').'</a>: '.$blogPosts.'</p>';
+						$this->content->text  .= block_mystats_blog_chart($blogPosts,$coursePosts,$modPosts,get_string('blogposts','block_mystats'),get_string('blogcourse','block_mystats'),get_string('blogactivity','block_mystats'));
+						$this->content->text  .= '</div>';
+					}
 				}
 				
 				/**
@@ -111,19 +158,64 @@ class block_mystats extends block_base {
 				 */
 
 				if($showQuiz&&$private){ //Do not show quiz grades outside the My Courses page
-				//get records
-				$quizAttempts = count($DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId)));
-				$quizScores = $DB->get_records_sql('SELECT grade FROM {quiz_grades} WHERE userid = ?', array($userId));
-				$quizAverage = block_mystats_avg($quizScores);
-				$quizHighest = block_mystats_highscore($quizScores);
+					if((($userConfig)&&($this->userShowQuiz))||(!$userConfig)){
+						//get records
+						$quizAttempts = count($DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId)));
+						$quizScores = $DB->get_records_sql('SELECT grade FROM {quiz_grades} WHERE userid = ?', array($userId));
+						$quizAverage = block_mystats_avg($quizScores);
+						$quizHighest = block_mystats_highscore($quizScores);
 
-				//output stats
-				$this->content->text  .= '<div id="mystats_quizzes" class="mystats_section"><h3>'.get_string('quizzes','block_mystats').'</h3>';
-				$this->content->text  .= '<p>'.get_string('quizattempt','block_mystats').': '.$quizAttempts.'</p>';
-				//$this->content->text  .= '<p>'.get_string('quizavgscore','block_mystats').': '.$quizAverage.'</p>';
-				//$this->content->text  .= '<p>'.get_string('quizhighscore','block_mystats').': '.$quizHighest.'</p>';
-				$this->content->text  .= block_mystats_quiz_chart($quizAverage,$quizHighest,get_string('quizavgscore','block_mystats'),get_string('quizhighscore','block_mystats'),get_string('quizscores','block_mystats'),get_string('scorepercent','block_mystats'));
-				$this->content->text  .= '</div>';
+						//output stats
+						$this->content->text  .= '<div id="mystats_quizzes" class="mystats_section"><h3>'.get_string('quizzes','block_mystats').'</h3>';
+						$this->content->text  .= '<p>'.get_string('quizattempt','block_mystats').': '.$quizAttempts.'</p>';
+						//$this->content->text  .= '<p>'.get_string('quizavgscore','block_mystats').': '.$quizAverage.'</p>';
+						//$this->content->text  .= '<p>'.get_string('quizhighscore','block_mystats').': '.$quizHighest.'</p>';
+						$this->content->text  .= block_mystats_quiz_chart($quizAverage,$quizHighest,get_string('quizavgscore','block_mystats'),get_string('quizhighscore','block_mystats'),get_string('quizscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						$this->content->text  .= '</div>';
+					}
+				}
+				
+				/**
+				 *Lesson Stats
+				 */
+				if($showLesson&&$private){ //Do not show lesson grades outside the My Courses page
+					if((($userConfig)&&($this->userShowLesson))||(!$userConfig)){
+						//get records
+						$lessonAttempts = count($DB->get_records_sql('SELECT * FROM {lesson_attempts} WHERE userid = ?', array($userId)));
+						$lessonScores = $DB->get_records_sql('SELECT grade FROM {lesson_grades} WHERE userid = ?', array($userId));
+						$lessonAverage = block_mystats_avg($lessonScores);
+						$lessonHighest = block_mystats_highscore($lessonScores);
+						
+						//output stats
+						$this->content->text  .= '<div id="mystats_lessons" class="mystats_section"><h3>'.get_string('lessons','block_mystats').'</h3>';
+						$this->content->text  .= '<p>'.get_string('lessonattempt','block_mystats').': '.$quizAttempts.'</p>';
+						//$this->content->text  .= '<p>'.get_string('lessonavgscore','block_mystats').': '.$quizAverage.'</p>';
+						//$this->content->text  .= '<p>'.get_string('lessonhighscore','block_mystats').': '.$quizHighest.'</p>';
+						$this->content->text  .= block_mystats_quiz_chart($lessonAverage,$lessonHighest,get_string('lessonavgscore','block_mystats'),get_string('lessonhighscore','block_mystats'),get_string('lessonscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						$this->content->text  .= '</div>';
+					}
+				}
+				
+				/**
+				 *Assignment Stats
+				 */
+
+				if($showAssignment&&$private){ //Do not show assignment grades outside the My Courses page
+					if((($userConfig)&&($this->userShowAssignment))||(!$userConfig)){
+						//get records
+						$assignmentAttempts = count($DB->get_records_sql('SELECT * FROM {assign_submission} WHERE userid = ?', array($userId)));
+						$assignmentScores = $DB->get_records_sql('SELECT grade FROM {assign_grades} WHERE userid = ?', array($userId));
+						$assignmentAverage = block_mystats_avg($assignmentScores);
+						$assignmentHighest = block_mystats_highscore($assignmentScores);
+
+						//output stats
+						$this->content->text  .= '<div id="mystats_assignments" class="mystats_section"><h3>'.get_string('assignments','block_mystats').'</h3>';
+						$this->content->text  .= '<p>'.get_string('assignmentattempt','block_mystats').': '.$assignmentAttempts.'</p>';
+						//$this->content->text  .= '<p>'.get_string('assignmentavgscore','block_mystats').': '.$assignmentAverage.'</p>';
+						//$this->content->text  .= '<p>'.get_string('assignmenthighscore','block_mystats').': '.$assignmentHighest.'</p>';
+						$this->content->text  .= block_mystats_quiz_chart($assignmentAverage,$assignmentHighest,get_string('assignmentavgscore','block_mystats'),get_string('assignmenthighscore','block_mystats'),get_string('assignmentscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						$this->content->text  .= '</div>';
+					}
 				}
 				
 				/**
@@ -131,17 +223,19 @@ class block_mystats extends block_base {
 				 */
 
 				if($showMsg){
-					//get records
-					$msgContact = count($DB->get_records_SQL('SELECT * FROM {message_contacts} WHERE userid = ?', array($userId)));
-					$sentMsg = count($DB->get_records_sql('SELECT * FROM {message} WHERE useridfrom = ?', array($userId)));
-					$rcvdMsg = count($DB->get_records_sql('SELECT * FROM {message} WHERE useridto = ?', array($userId)));
+					if((($userConfig)&&($this->userShowMsg))||(!$userConfig)){
+						//get records
+						$msgContact = count($DB->get_records_SQL('SELECT * FROM {message_contacts} WHERE userid = ?', array($userId)));
+						$sentMsg = count($DB->get_records_sql('SELECT * FROM {message} WHERE useridfrom = ?', array($userId)));
+						$rcvdMsg = count($DB->get_records_sql('SELECT * FROM {message} WHERE useridto = ?', array($userId)));
 
-					//output stats
-					$this->content->text  .= '<div id="mystats_messages" class="mystats_section"><h3>'.get_string('messages','block_mystats').'</h3>';
-					$this->content->text  .= '<p>'.get_string('messagesent','block_mystats').': '.$sentMsg.'</p>';
-					$this->content->text  .= '<p>'.get_string('messagereceived','block_mystats').': '.$rcvdMsg.'</p>';
-					$this->content->text  .= '<p>'.get_string('messagecontacts','block_mystats').': '.$msgContact.'</p>';
-					$this->content->text  .= '</div>';
+						//output stats
+						$this->content->text  .= '<div id="mystats_messages" class="mystats_section"><h3>'.get_string('messages','block_mystats').'</h3>';
+						$this->content->text  .= '<p>'.get_string('messagesent','block_mystats').': '.$sentMsg.'</p>';
+						$this->content->text  .= '<p>'.get_string('messagereceived','block_mystats').': '.$rcvdMsg.'</p>';
+						$this->content->text  .= '<p>'.get_string('messagecontacts','block_mystats').': '.$msgContact.'</p>';
+						$this->content->text  .= '</div>';
+					}
 				}
 				
 				/**
@@ -149,17 +243,19 @@ class block_mystats extends block_base {
 				 */
 
 				if($showFile){
-					//get records
-					$privateFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'private', 'NULL')));
-					$subFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'submission_files', 'NULL')));
-					$attachFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'attachment', 'NULL')));
+					if((($userConfig)&&($this->userShowFile))||(!$userConfig)){
+						//get records
+						$privateFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'private', 'NULL')));
+						$subFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'submission_files', 'NULL')));
+						$attachFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'attachment', 'NULL')));
 
-					//output stats
-					$this->content->text  .= '<div id="mystats_files" class="mystats_section"><h3>Files</h3>';
-					$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/user/files.php">Private Files</a>: '.$privateFiles.'</p>';
-					$this->content->text  .= '<p>Attached to Posts: '.$attachFiles.'</p>';
-					$this->content->text  .= '<p>Submitted for Assignments: '.$subFiles.'</p>';
-					$this->content->text  .= '</div>';
+						//output stats
+						$this->content->text  .= '<div id="mystats_files" class="mystats_section"><h3>Files</h3>';
+						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/user/files.php">Private Files</a>: '.$privateFiles.'</p>';
+						$this->content->text  .= '<p>Attached to Posts: '.$attachFiles.'</p>';
+						$this->content->text  .= '<p>Submitted for Assignments: '.$subFiles.'</p>';
+						$this->content->text  .= '</div>';
+					}
 				}
 				
 				

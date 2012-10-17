@@ -36,12 +36,16 @@ $string['showforum'] = 'Forums';
 $string['showforumtext'] = 'Show forum statistics';
 $string['showblog'] = 'Blogs';
 $string['showblogtext'] = 'Show blog statistics';
+$string['showquiz'] = 'Quizzes';
+$string['showquiztext'] = 'Show quiz statistics';
+$string['showlesson'] = 'Lessons';
+$string['showlessontext'] = 'Show lesson statistics';
+$string['showassignment'] = 'Assignments';
+$string['showassignmenttext'] = 'Show assignment statistics';
 $string['showmsg'] = 'Messages';
 $string['showmsgtext'] = 'Show message statistics';
 $string['showfile'] = 'Files';
 $string['showfiletext'] = 'Show file statistics';
-$string['showquiz'] = 'Quizzes';
-$string['showquiztext'] = 'Show quiz statistics';
 //Forum Strings
 $string['forums'] = 'Forums';
 $string['forumposts'] = 'All Forum Posts';
@@ -52,6 +56,24 @@ $string['blogs'] = 'Blogs';
 $string['blogposts'] = 'All Blog Posts';
 $string['blogcourse'] = 'Related to a Course';
 $string['blogactivity'] = 'Related to an Activity';
+//Quiz Strings
+$string['quizzes'] = 'Quizzes';
+$string['quizattempt'] = 'Quiz Attempts';
+$string['quizavgscore'] = 'Average Score';
+$string['quizhighscore'] = 'Highest Score';
+$string['quizscores'] = 'Quiz Scores';
+//Lesson Strings
+$string['lessons'] = 'Lessons';
+$string['lessonattempt'] = 'Lesson Attempts';
+$string['lessonavgscore'] = 'Average Score';
+$string['lessonhighscore'] = 'Highest Score';
+$string['lessonscores'] = 'Lesson Scores';
+//Assignment Strings
+$string['assignments'] = 'Assignments';
+$string['assignmentattempt'] = 'Assignment Submissions';
+$string['assignmentavgscore'] = 'Average Score';
+$string['assignmenthighscore'] = 'Highest Score';
+$string['assignmentscores'] = 'Assignment Scores';
 //Message Strings
 $string['messages'] = 'Messages';
 $string['messagesent'] = 'Messages Sent';
@@ -62,11 +84,6 @@ $string['files'] = 'Files';
 $string['fileprivate'] = 'Private Files';
 $string['fileattached'] = 'Attached to Posts';
 $string['filesubmitted'] = 'Submitted for Assignments';
-//Quiz Strings
-$string['quizzes'] = 'Quizzes';
-$string['quizattempt'] = 'Quiz Attempts';
-$string['quizavgscore'] = 'Average Score';
-$string['quizhighscore'] = 'Highest Score';
-$string['quizscores'] = 'Quiz Scores';
+//Other Strings
 $string['scorepercent'] = 'Score Percent';
 $string['nogrades'] = 'No grades recorded';
