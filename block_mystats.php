@@ -19,7 +19,7 @@
  *
  * @package    block
  * @subpackage mystats
- * @copyright  2012 onwards Nathan Robbins
+ * @copyright  2012 onwards Nathan Robbins (https://github.com/nrobbins)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_mystats extends block_base {
@@ -70,12 +70,28 @@ class block_mystats extends block_base {
 			} else {
 				$this->userShowFile = 1;
 			}
+			if (!empty($this->config->glossary)){
+				$this->userShowGlossary = $this->config->glossary;
+			} else {
+				$this->userShowGlossary = 1;
+			}
+			if (!empty($this->config->charts)){
+				$this->userShowCharts = $this->config->charts;
+			} else {
+				$this->userShowCharts = 1;
+			}
 		}
     function applicable_formats() {
-        return array(
-				'my-index' => true,
-				'user-profile' => true,
-				);
+				if(get_config('mystats','allow_profile_page')){
+					return array(
+					'my-index' => true,
+					'user-profile' => true,
+					);
+				} else {
+					return array(
+					'my-index' => true,
+					);
+				}
     }
 		public function instance_allow_multiple() {
 			return true;
@@ -96,7 +112,20 @@ class block_mystats extends block_base {
 					$private = false;
 				}
 				
+				$this->userShowCharts = $this->config->charts;
+				$this->userShowForum = $this->config->forum;
+				$this->userShowBlog = $this->config->blog;
+				$this->userShowQuiz = $this->config->quiz;
+				$this->userShowMsg = $this->config->msg;
+				$this->userShowFile = $this->config->file;
+				$this->userShowGlossary = $this->config->glossary;
+
 				$userConfig = get_config('mystats','allow_user_config');
+				if(get_config('mystats','show_charts')&&(($userConfig)&&($this->userShowCharts))||(!$userConfig)){
+					$showCharts = true;
+				} else {
+					$showCharts = false;
+				}
 				$showForum = get_config('mystats','show_stats_forum');
 				$showBlog = get_config('mystats','show_stats_blog');
 				$showQuiz = get_config('mystats','show_stats_quiz');
@@ -104,20 +133,14 @@ class block_mystats extends block_base {
 				$showAssignment = get_config('mystats','show_stats_assignment');
 				$showMsg = get_config('mystats','show_stats_msg');
 				$showFile = get_config('mystats','show_stats_file');
-				
-				$this->userShowForum = $this->config->forum;
-				$this->userShowBlog = $this->config->blog;
-				$this->userShowQuiz = $this->config->quiz;
-				$this->userShowMsg = $this->config->msg;
-				$this->userShowFile = $this->config->file;
-				
+				$showGlossary = get_config('mystats','show_stats_glossary');
+								
         $this->content = new stdClass;
 				$this->content->text  = '';
-				//$this->content->text .= print_r($this->page->bodyid,true);
+				
 				/**
 				 *Forum Stats
 				 */
-				
 				if($showForum){
 					if((($userConfig)&&($this->userShowForum))||(!$userConfig)){
 						//get records
@@ -129,7 +152,12 @@ class block_mystats extends block_base {
 						//output stats
 						$this->content->text  .= '<div id="mystats_forums" class="mystats_section"><h3>'.get_string('forums','block_mystats').'</h3>';
 						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/mod/forum/user.php?id='.$userId.'">'.get_string('forumposts','block_mystats').'</a>: '.$forumPosts.'</p>';
-						$this->content->text  .= block_mystats_forum_chart($newTopics,$forumReplies,get_string('forumtopics','block_mystats'),get_string('forumreplies','block_mystats'));
+						if($showCharts){
+							$this->content->text  .= block_mystats_forum_chart($newTopics,$forumReplies,get_string('forumtopics','block_mystats'),get_string('forumreplies','block_mystats'));
+						} else {
+							$this->content->text  .= '<p>'.get_string('forumtopics','block_mystats').': '.$newTopics.'</p>';
+							$this->content->text  .= '<p>'.get_string('forumreplies','block_mystats').': '.$forumReplies.'</p>';
+						}
 						$this->content->text  .= '</div>';
 					}
 				}
@@ -148,7 +176,12 @@ class block_mystats extends block_base {
 						//output stats
 						$this->content->text  .= '<div id="mystats_blogs" class="mystats_section"><h3>'.get_string('blogs','block_mystats').'</h3>';
 						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/blog/index.php?userid='.$userId.'">'.get_string('blogposts','block_mystats').'</a>: '.$blogPosts.'</p>';
-						$this->content->text  .= block_mystats_blog_chart($blogPosts,$coursePosts,$modPosts,get_string('blogposts','block_mystats'),get_string('blogcourse','block_mystats'),get_string('blogactivity','block_mystats'));
+						if($showCharts){
+							$this->content->text  .= block_mystats_blog_chart($blogPosts,$coursePosts,$modPosts,get_string('blogposts','block_mystats'),get_string('blogcourse','block_mystats'),get_string('blogactivity','block_mystats'));
+						} else {
+							$this->content->text  .= '<p>'.get_string('blogcourse','block_mystats').': '.$coursePosts.'</p>';
+							$this->content->text  .= '<p>'.get_string('blogactivity','block_mystats').': '.$modPosts.'</p>';
+						}
 						$this->content->text  .= '</div>';
 					}
 				}
@@ -168,9 +201,12 @@ class block_mystats extends block_base {
 						//output stats
 						$this->content->text  .= '<div id="mystats_quizzes" class="mystats_section"><h3>'.get_string('quizzes','block_mystats').'</h3>';
 						$this->content->text  .= '<p>'.get_string('quizattempt','block_mystats').': '.$quizAttempts.'</p>';
-						//$this->content->text  .= '<p>'.get_string('quizavgscore','block_mystats').': '.$quizAverage.'</p>';
-						//$this->content->text  .= '<p>'.get_string('quizhighscore','block_mystats').': '.$quizHighest.'</p>';
-						$this->content->text  .= block_mystats_quiz_chart($quizAverage,$quizHighest,get_string('quizavgscore','block_mystats'),get_string('quizhighscore','block_mystats'),get_string('quizscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						if($showCharts){
+							$this->content->text  .= block_mystats_quiz_chart($quizAverage,$quizHighest,get_string('quizavgscore','block_mystats'),get_string('quizhighscore','block_mystats'),get_string('quizscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						} else {
+							$this->content->text  .= '<p>'.get_string('quizavgscore','block_mystats').': '.$quizAverage.'</p>';
+							$this->content->text  .= '<p>'.get_string('quizhighscore','block_mystats').': '.$quizHighest.'</p>';
+						}
 						$this->content->text  .= '</div>';
 					}
 				}
@@ -191,7 +227,12 @@ class block_mystats extends block_base {
 						$this->content->text  .= '<p>'.get_string('lessonattempt','block_mystats').': '.$quizAttempts.'</p>';
 						//$this->content->text  .= '<p>'.get_string('lessonavgscore','block_mystats').': '.$quizAverage.'</p>';
 						//$this->content->text  .= '<p>'.get_string('lessonhighscore','block_mystats').': '.$quizHighest.'</p>';
-						$this->content->text  .= block_mystats_quiz_chart($lessonAverage,$lessonHighest,get_string('lessonavgscore','block_mystats'),get_string('lessonhighscore','block_mystats'),get_string('lessonscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						if($showCharts){
+							$this->content->text  .= block_mystats_quiz_chart($lessonAverage,$lessonHighest,get_string('lessonavgscore','block_mystats'),get_string('lessonhighscore','block_mystats'),get_string('lessonscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						} else {
+							$this->content->text  .= '<p>'.get_string('lessonavgscore','block_mystats').': '.$lessonAverage.'</p>';
+							$this->content->text  .= '<p>'.get_string('lessonhighscore','block_mystats').': '.$lessonHighest.'</p>';
+						}
 						$this->content->text  .= '</div>';
 					}
 				}
@@ -211,9 +252,12 @@ class block_mystats extends block_base {
 						//output stats
 						$this->content->text  .= '<div id="mystats_assignments" class="mystats_section"><h3>'.get_string('assignments','block_mystats').'</h3>';
 						$this->content->text  .= '<p>'.get_string('assignmentattempt','block_mystats').': '.$assignmentAttempts.'</p>';
-						//$this->content->text  .= '<p>'.get_string('assignmentavgscore','block_mystats').': '.$assignmentAverage.'</p>';
-						//$this->content->text  .= '<p>'.get_string('assignmenthighscore','block_mystats').': '.$assignmentHighest.'</p>';
-						$this->content->text  .= block_mystats_quiz_chart($assignmentAverage,$assignmentHighest,get_string('assignmentavgscore','block_mystats'),get_string('assignmenthighscore','block_mystats'),get_string('assignmentscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						if($showCharts){
+							$this->content->text  .= block_mystats_quiz_chart($assignmentAverage,$assignmentHighest,get_string('assignmentavgscore','block_mystats'),get_string('assignmenthighscore','block_mystats'),get_string('assignmentscores','block_mystats'),get_string('scorepercent','block_mystats'));
+						} else {
+							$this->content->text  .= '<p>'.get_string('assignmentavgscore','block_mystats').': '.$assignmentAverage.'</p>';
+							$this->content->text  .= '<p>'.get_string('assignmenthighscore','block_mystats').': '.$assignmentHighest.'</p>';
+						}
 						$this->content->text  .= '</div>';
 					}
 				}
@@ -250,16 +294,41 @@ class block_mystats extends block_base {
 						$attachFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'attachment', 'NULL')));
 
 						//output stats
-						$this->content->text  .= '<div id="mystats_files" class="mystats_section"><h3>Files</h3>';
-						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/user/files.php">Private Files</a>: '.$privateFiles.'</p>';
-						$this->content->text  .= '<p>Attached to Posts: '.$attachFiles.'</p>';
-						$this->content->text  .= '<p>Submitted for Assignments: '.$subFiles.'</p>';
+						$this->content->text  .= '<div id="mystats_files" class="mystats_section"><h3>'.get_string('files','block_mystats').'</h3>';
+						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/user/files.php">'.get_string('fileprivate','block_mystats').'</a>: '.$privateFiles.'</p>';
+						$this->content->text  .= '<p>'.get_string('fileattached','block_mystats').': '.$attachFiles.'</p>';
+						$this->content->text  .= '<p>'.get_string('filesubmitted','block_mystats').': '.$subFiles.'</p>';
 						$this->content->text  .= '</div>';
 					}
 				}
 				
-				
-        $this->content->footer = '<div class="clearfix"></div>';
+				/**
+				 *Glossary Stats
+				 */
+				if($showGlossary){
+					if((($userConfig)&&($this->userShowGlossary))||(!$userConfig)){
+						//get records
+						$glossaryEntries = $DB->get_records_sql('SELECT * FROM {glossary_entries} WHERE userid = ?',array($userId));
+						$glossaryTotal = count($glossaryEntries);
+						$glossaryApproved = 0;
+						if($glossaryTotal>=1){
+							foreach($glossaryEntries as $entry=>$data){
+								foreach($data as $info=>$value){
+									if($info=='approved'&&$value==1){
+										$glossaryApproved++;
+									}
+								}
+							}
+						}
+						//output stats
+						$this->content->text  .= '<div id="mystats_glossary" class="mystats_section"><h3>'.get_string('glossary','block_mystats').'</h3>';
+						$this->content->text  .= '<p>'.get_string('glossaryentries','block_mystats').': '.$glossaryTotal.'</p>';			
+						$this->content->text  .= '<p>'.get_string('glossaryapproved','block_mystats').': '.$glossaryApproved.'</p>';
+						$this->content->text  .= '</div>';
+					}
+				}
+
+				$this->content->footer = '<div class="clearfix"></div>';
 				return $this->content;
 		}
 }

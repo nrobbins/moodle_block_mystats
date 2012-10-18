@@ -19,7 +19,7 @@
  * Strings for component 'block_mystats'
  *
  * @package   block_mystats
- * @copyright 2012 Nathan Robbins
+ * @copyright 2012 Nathan Robbins (https://github.com/nrobbins)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,11 @@ $string['blocksettings'] = 'My Stats Settings';
 $string['adminheading'] = 'My Stats Global Settings';
 $string['admintext'] = 'These settings affect all instances of the My Stats block.';
 $string['allowuserconfig'] = 'Allow user configuration';
-$string['allowuserconfigtext'] = 'Allow users to choose which sections are displayed (of those allowed in these settings)';
+$string['allowuserconfigtext'] = 'Allow users to choose which sections are displayed (of those allowed in these settings).';
+$string['allowprofile'] = 'Allow on profile pages';
+$string['allowprofiletext'] = 'Allow the My Stats block to appear on user profile pages. Grade-related stats are hidden in this context.';
+$string['showcharts'] = 'Show Charts';
+$string['showchartstext'] = 'Show charts for each stat group. When disabled, the information is presented as text.';
 $string['showforum'] = 'Forums';
 $string['showforumtext'] = 'Show forum statistics';
 $string['showblog'] = 'Blogs';
@@ -46,6 +50,8 @@ $string['showmsg'] = 'Messages';
 $string['showmsgtext'] = 'Show message statistics';
 $string['showfile'] = 'Files';
 $string['showfiletext'] = 'Show file statistics';
+$string['showglossary'] = 'Glossary Entries';
+$string['showglossarytext'] = 'Show glossary entry statistics';
 //Forum Strings
 $string['forums'] = 'Forums';
 $string['forumposts'] = 'All Forum Posts';
@@ -84,6 +90,10 @@ $string['files'] = 'Files';
 $string['fileprivate'] = 'Private Files';
 $string['fileattached'] = 'Attached to Posts';
 $string['filesubmitted'] = 'Submitted for Assignments';
+//Glossary Strings
+$string['glossary'] = 'Glossary';
+$string['glossaryentries'] = 'Glossary Entries';
+$string['glossaryapproved'] = 'Approved Entries';
 //Other Strings
 $string['scorepercent'] = 'Score Percent';
 $string['nogrades'] = 'No grades recorded';

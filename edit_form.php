@@ -19,7 +19,7 @@
  *
  * @package    block
  * @subpackage mystats
- * @copyright  2012 onwards Nathan Robbins
+ * @copyright  2012 onwards Nathan Robbins (https://github.com/nrobbins)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_mystats_edit_form extends block_edit_form {
@@ -37,6 +37,7 @@ class block_mystats_edit_form extends block_edit_form {
 				$mform->addHelpButton('config_title', 'blocktitle', 'block_mystats');
         
 				$userConfig = get_config('mystats','allow_user_config');
+				$showCharts = get_config('mystats','show_charts');
 				$showForum = get_config('mystats','show_stats_forum');
 				$showBlog = get_config('mystats','show_stats_blog');
 				$showQuiz = get_config('mystats','show_stats_quiz');
@@ -44,8 +45,13 @@ class block_mystats_edit_form extends block_edit_form {
 				$showAssignment = get_config('mystats','show_stats_assignment');
 				$showMsg = get_config('mystats','show_stats_msg');
 				$showFile = get_config('mystats','show_stats_file');
+				$showGlossary = get_config('mystats','show_stats_glossary');
 				
 				if($userConfig){
+					if($showCharts){
+						$mform->addElement('advcheckbox', 'config_charts', get_string('showcharts', 'block_mystats'), get_string('showchartstext', 'block_mystats'));
+						$mform->setDefault('config_charts', 1);
+					}
 					if($showForum){
 						$mform->addElement('advcheckbox', 'config_forum', get_string('showforum', 'block_mystats'), get_string('showforumtext', 'block_mystats'));
 						$mform->setDefault('config_form', 1);
@@ -79,6 +85,11 @@ class block_mystats_edit_form extends block_edit_form {
 					if($showFile){
 						$mform->addElement('advcheckbox', 'config_file', get_string('showfile', 'block_mystats'), get_string('showfiletext', 'block_mystats'));
 						$mform->setDefault('config_file', 1);
+					}
+
+					if($showGlossary){
+						$mform->addElement('advcheckbox', 'config_glossary', get_string('showglossary', 'block_mystats'), get_string('showglossarytext', 'block_mystats'));
+						$mform->setDefault('config_glossary', 1);
 					}
 				}
     } 
