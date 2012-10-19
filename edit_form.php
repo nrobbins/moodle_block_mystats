@@ -54,7 +54,7 @@ class block_mystats_edit_form extends block_edit_form {
 					}
 					if($showForum){
 						$mform->addElement('advcheckbox', 'config_forum', get_string('showforum', 'block_mystats'), get_string('showforumtext', 'block_mystats'));
-						$mform->setDefault('config_form', 1);
+						$mform->setDefault('config_forum', 1);
 					}
 					
 					if($showBlog){

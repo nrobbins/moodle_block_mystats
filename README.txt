@@ -11,6 +11,6 @@ When placed in the User Profile page, the user sees the statistics of the profil
 
 This block works best in wide block regions or in the dock.
 ==Notes==
-Charts are generated with the pChart 2.1.3 library (included)
+Charts are generated with the pChart 2.1.3 library (included).
 
 This block makes a bunch of database queries. It has not been tested in a large production environment.

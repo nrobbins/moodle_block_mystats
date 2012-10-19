@@ -70,15 +70,15 @@ class block_mystats extends block_base {
 			} else {
 				$this->userShowFile = 1;
 			}
-			if (!empty($this->config->glossary)){
-				$this->userShowGlossary = $this->config->glossary;
-			} else {
+			if (empty($this->config->glossary)){
 				$this->userShowGlossary = 1;
-			}
-			if (!empty($this->config->charts)){
-				$this->userShowCharts = $this->config->charts;
 			} else {
+				$this->userShowGlossary = $this->config->glossary;
+			}
+			if (empty($this->config->charts)){
 				$this->userShowCharts = 1;
+			} else {
+				$this->userShowCharts = $this->config->charts;
 			}
 		}
     function applicable_formats() {
@@ -111,15 +111,17 @@ class block_mystats extends block_base {
 					$userId = $_GET['id'];
 					$private = false;
 				}
-				
-				$this->userShowCharts = $this->config->charts;
-				$this->userShowForum = $this->config->forum;
-				$this->userShowBlog = $this->config->blog;
-				$this->userShowQuiz = $this->config->quiz;
-				$this->userShowMsg = $this->config->msg;
-				$this->userShowFile = $this->config->file;
-				$this->userShowGlossary = $this->config->glossary;
-
+				if(isset($this->config)){
+					$this->userShowCharts = $this->config->charts;
+					$this->userShowForum = $this->config->forum;
+					$this->userShowBlog = $this->config->blog;
+					$this->userShowQuiz = $this->config->quiz;
+					$this->userShowLesson = $this->config->lesson;
+					$this->userShowAssignment = $this->config->assignment;
+					$this->userShowMsg = $this->config->msg;
+					$this->userShowFile = $this->config->file;
+					$this->userShowGlossary = $this->config->glossary;
+				}
 				$userConfig = get_config('mystats','allow_user_config');
 				if(get_config('mystats','show_charts')&&(($userConfig)&&($this->userShowCharts))||(!$userConfig)){
 					$showCharts = true;
@@ -224,7 +226,7 @@ class block_mystats extends block_base {
 						
 						//output stats
 						$this->content->text  .= '<div id="mystats_lessons" class="mystats_section"><h3>'.get_string('lessons','block_mystats').'</h3>';
-						$this->content->text  .= '<p>'.get_string('lessonattempt','block_mystats').': '.$quizAttempts.'</p>';
+						$this->content->text  .= '<p>'.get_string('lessonattempt','block_mystats').': '.$lessonAttempts.'</p>';
 						//$this->content->text  .= '<p>'.get_string('lessonavgscore','block_mystats').': '.$quizAverage.'</p>';
 						//$this->content->text  .= '<p>'.get_string('lessonhighscore','block_mystats').': '.$quizHighest.'</p>';
 						if($showCharts){
@@ -277,7 +279,7 @@ class block_mystats extends block_base {
 						$this->content->text  .= '<div id="mystats_messages" class="mystats_section"><h3>'.get_string('messages','block_mystats').'</h3>';
 						$this->content->text  .= '<p>'.get_string('messagesent','block_mystats').': '.$sentMsg.'</p>';
 						$this->content->text  .= '<p>'.get_string('messagereceived','block_mystats').': '.$rcvdMsg.'</p>';
-						$this->content->text  .= '<p>'.get_string('messagecontacts','block_mystats').': '.$msgContact.'</p>';
+						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/message/index.php">'.get_string('messagecontacts','block_mystats').'</a>: '.$msgContact.'</p>';
 						$this->content->text  .= '</div>';
 					}
 				}
