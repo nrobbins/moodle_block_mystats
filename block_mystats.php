@@ -294,12 +294,26 @@ class block_mystats extends block_base {
 						$privateFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'private', 'NULL')));
 						$subFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'submission_files', 'NULL')));
 						$attachFiles = count($DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea = ? AND mimetype != ?', array($userId, 'attachment', 'NULL')));
+						$files = $DB->get_records_sql('SELECT * FROM {files} WHERE userid = ? AND filearea != ? AND mimetype !=?', array($userId, 'draft', 'NULL'));
+						$totalSize = 0;
+						$avgSize = 0;
+						$fileNumber = 0;
+						foreach($files as $id => $info){
+								$totalSize += $info->filesize;
+								$fileNumber++;
+						}
+						if($fileNumber>0){
+							$avgSize = $totalSize / $fileNumber;
+						}
+						//echo $totalSize.' bytes';
 
 						//output stats
 						$this->content->text  .= '<div id="mystats_files" class="mystats_section"><h3>'.get_string('files','block_mystats').'</h3>';
 						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/user/files.php">'.get_string('fileprivate','block_mystats').'</a>: '.$privateFiles.'</p>';
 						$this->content->text  .= '<p>'.get_string('fileattached','block_mystats').': '.$attachFiles.'</p>';
 						$this->content->text  .= '<p>'.get_string('filesubmitted','block_mystats').': '.$subFiles.'</p>';
+						$this->content->text  .= '<p>'.get_string('filetotalsize','block_mystats').': '.$totalSize.' '.get_string('bytes','block_mystats').'</p>';
+						$this->content->text  .= '<p>'.get_string('fileavgsize','block_mystats').': '.$avgSize.' '.get_string('bytes','block_mystats').'</p>';
 						$this->content->text  .= '</div>';
 					}
 				}
