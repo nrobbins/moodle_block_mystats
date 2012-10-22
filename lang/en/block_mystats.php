@@ -92,6 +92,7 @@ $string['fileattached'] = 'Attached to Posts';
 $string['filesubmitted'] = 'Submitted for Assignments';
 $string['filetotalsize'] = 'Total size of uploaded files';
 $string['fileavgsize'] = 'Average size of uploaded files';
+$string['largestfile'] = 'Largest file uploaded';
 $string['bytes'] = 'bytes';
 //Glossary Strings
 $string['glossary'] = 'Glossary';

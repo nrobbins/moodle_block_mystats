@@ -298,13 +298,20 @@ class block_mystats extends block_base {
 						$totalSize = 0;
 						$avgSize = 0;
 						$fileNumber = 0;
+						$largestFile = 0;
+						$largestFileName = 'No files uploaded';
 						foreach($files as $id => $info){
+								if($info->filesize > $largestFile){
+										$largestFile = $info->filesize;
+										$largestFileName = $info->filename;
+								}
 								$totalSize += $info->filesize;
 								$fileNumber++;
 						}
 						if($fileNumber>0){
-							$avgSize = $totalSize / $fileNumber;
+								$avgSize = $totalSize / $fileNumber;
 						}
+						
 						//echo $totalSize.' bytes';
 
 						//output stats
@@ -314,6 +321,9 @@ class block_mystats extends block_base {
 						$this->content->text  .= '<p>'.get_string('filesubmitted','block_mystats').': '.$subFiles.'</p>';
 						$this->content->text  .= '<p>'.get_string('filetotalsize','block_mystats').': '.$totalSize.' '.get_string('bytes','block_mystats').'</p>';
 						$this->content->text  .= '<p>'.get_string('fileavgsize','block_mystats').': '.$avgSize.' '.get_string('bytes','block_mystats').'</p>';
+						if($private){
+							$this->content->text  .= '<p>'.get_string('largestfile','block_mystats').' '.$largestFileName.': '.$largestFile.' '.get_string('bytes','block_mystats').'.</p>';
+						}
 						$this->content->text  .= '</div>';
 					}
 				}
