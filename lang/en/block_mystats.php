@@ -17,24 +17,24 @@
 
 /**
  * Strings for component 'block_mystats'
- *
+ * Language = en
  * @package   block_mystats
  * @copyright 2012 Nathan Robbins (https://github.com/nrobbins)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'My Stats';
-$string['blocktitle'] = 'Block Title';
+$string['blocktitle'] = 'Block title';
 $string['blocktitle_help'] = 'The title that appears in the heading of the block';
 //Setting Strings
-$string['blocksettings'] = 'My Stats Settings';
-$string['adminheading'] = 'My Stats Global Settings';
+$string['blocksettings'] = 'My stats settings';
+$string['adminheading'] = 'My stats global settings';
 $string['admintext'] = 'These settings affect all instances of the My Stats block.';
 $string['allowuserconfig'] = 'Allow user configuration';
 $string['allowuserconfigtext'] = 'Allow users to choose which sections are displayed (of those allowed in these settings).';
 $string['allowprofile'] = 'Allow on profile pages';
-$string['allowprofiletext'] = 'Allow the My Stats block to appear on user profile pages. Grade-related stats are hidden in this context.';
-$string['showcharts'] = 'Show Charts';
+$string['allowprofiletext'] = 'Allow the My Stats block to appear on user profile pages. Grade-related stats are hidden in this context. If there are already instances of this block on profile pages, disabling them may cause errors.';
+$string['showcharts'] = 'Show charts';
 $string['showchartstext'] = 'Show charts for each stat group. When disabled, the information is presented as text.';
 $string['showforum'] = 'Forums';
 $string['showforumtext'] = 'Show forum statistics';
@@ -50,57 +50,56 @@ $string['showmsg'] = 'Messages';
 $string['showmsgtext'] = 'Show message statistics';
 $string['showfile'] = 'Files';
 $string['showfiletext'] = 'Show file statistics';
-$string['showglossary'] = 'Glossary Entries';
+$string['showglossary'] = 'Glossary entries';
 $string['showglossarytext'] = 'Show glossary entry statistics';
 //Forum Strings
 $string['forums'] = 'Forums';
-$string['forumposts'] = 'All Forum Posts';
-$string['forumtopics'] = 'New Topics';
+$string['forumposts'] = 'All forum posts';
+$string['forumtopics'] = 'New topics';
 $string['forumreplies'] = 'Replies';
+$string['noposts'] = 'No posts recorded';
+$string['latestpost'] = 'Latest post';
 //Blog Strings
 $string['blogs'] = 'Blogs';
-$string['blogposts'] = 'All Blog Posts';
-$string['blogcourse'] = 'Related to a Course';
-$string['blogactivity'] = 'Related to an Activity';
+$string['blogposts'] = 'All blog posts';
+$string['blogcourse'] = 'Related to a course';
+$string['blogactivity'] = 'Related to an activity';
 //Quiz Strings
 $string['quizzes'] = 'Quizzes';
-$string['quizattempt'] = 'Quiz Attempts';
-$string['quizavgscore'] = 'Average Score';
-$string['quizhighscore'] = 'Highest Score';
-$string['quizscores'] = 'Quiz Scores';
-$string['lastattempt'] = 'Last Attempt';
+$string['quizattempt'] = 'Quiz attempts';
+$string['quizavgscore'] = 'Average score';
+$string['quizhighscore'] = 'Highest score';
+$string['quizscores'] = 'Quiz scores';
+$string['lastattempt'] = 'Latest attempt';
 $string['noattemptsrecorded'] = 'No attempts recorded';
 //Lesson Strings
 $string['lessons'] = 'Lessons';
-$string['lessonattempt'] = 'Lesson Attempts';
-$string['lessonavgscore'] = 'Average Score';
-$string['lessonhighscore'] = 'Highest Score';
-$string['lessonscores'] = 'Lesson Scores';
+$string['lessonattempt'] = 'Lesson attempts';
+$string['lessonscores'] = 'Lesson scores';
 //Assignment Strings
 $string['assignments'] = 'Assignments';
-$string['assignmentattempt'] = 'Assignment Submissions';
-$string['assignmentavgscore'] = 'Average Score';
-$string['assignmenthighscore'] = 'Highest Score';
-$string['assignmentscores'] = 'Assignment Scores';
+$string['assignmentattempt'] = 'Assignment submissions';
+$string['assignmentscores'] = 'Assignment scores';
 //Message Strings
 $string['messages'] = 'Messages';
-$string['messagesent'] = 'Messages Sent';
-$string['messagereceived'] = 'Messages Received';
-$string['messagecontacts'] = 'Messaging Contacts';
+$string['messagesent'] = 'Messages sent';
+$string['messagereceived'] = 'Messages received';
+$string['messagecontacts'] = 'Messaging contacts';
 //File Strings
 $string['files'] = 'Files';
-$string['totalfiles'] = 'Total Files';
-$string['fileprivate'] = 'Private Files';
-$string['fileattached'] = 'Attached to Posts';
-$string['filesubmitted'] = 'Submitted for Assignments';
+$string['totalfiles'] = 'Total files';
+$string['fileprivate'] = 'Private files';
+$string['fileattached'] = 'Attached to posts';
+$string['filesubmitted'] = 'Submitted for assignments';
 $string['filetotalsize'] = 'Total size of uploaded files';
 $string['fileavgsize'] = 'Average file size';
 $string['largestfile'] = 'Largest file';
 $string['bytes'] = 'bytes';
+$string['nofiles'] = 'No files uploaded';
 //Glossary Strings
 $string['glossary'] = 'Glossary';
-$string['glossaryentries'] = 'Glossary Entries';
-$string['glossaryapproved'] = 'Approved Entries';
+$string['glossaryentries'] = 'Glossary entries';
+$string['glossaryapproved'] = 'Approved entries';
 //Other Strings
-$string['scorepercent'] = 'Score Percent';
+$string['scorepercent'] = 'Score percent';
 $string['nogrades'] = 'No grades recorded';
