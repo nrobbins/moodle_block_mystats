@@ -195,14 +195,33 @@ class block_mystats extends block_base {
 				if($showQuiz&&$private){ //Do not show quiz grades outside the My Courses page
 					if((($userConfig)&&($this->userShowQuiz))||(!$userConfig)){
 						//get records
-						$quizAttempts = count($DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId)));
+						//$quizAttemptsNumber = count($DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId)));
 						$quizScores = $DB->get_records_sql('SELECT grade FROM {quiz_grades} WHERE userid = ?', array($userId));
 						$quizAverage = block_mystats_avg($quizScores);
 						$quizHighest = block_mystats_highscore($quizScores);
+						$quizAttempts = $DB->get_records_sql('SELECT * FROM {quiz_attempts} WHERE userid = ?', array($userId));
+						$quizAttemptsNumber = 0;
+						$quizAttemptId = 0;
+						foreach($quizAttempts as $id => $info){
+							$quizAttemptsNumber++;
+							if($info->timemodified > $quizAttemptId){
+								$quizAttemptId = $info->quiz;
+							}
+						}
+						if($quizAttemptId > 0){
+							$lastQuizAttempt = $DB->get_record_sql('SELECT name, course FROM {quiz} WHERE id = ?', array($quizAttemptId));
+							$quizCM = $DB->get_record_sql('SELECT id FROM {course_modules} WHERE module = ? AND instance = ?',array(16,$quizAttemptId));//need to be sure 16 will always be the quiz module...
+						}
 
 						//output stats
 						$this->content->text  .= '<div id="mystats_quizzes" class="mystats_section"><h3>'.get_string('quizzes','block_mystats').'</h3>';
-						$this->content->text  .= '<p>'.get_string('quizattempt','block_mystats').': '.$quizAttempts.'</p>';
+						 
+						if($quizAttemptId <= 0){
+							$this->content->text  .='<p>'.get_string('noattemptsrecorded','block_mystats').'</p>';
+						} else {
+							$this->content->text  .= '<p>'.get_string('quizattempt','block_mystats').': '.$quizAttemptsNumber.'</p>';
+							$this->content->text  .='<p>'.get_string('lastattempt','block_mystats').': <a href="'.$CFG->wwwroot.'/mod/quiz/view.php?id='.$quizCM->id.'">'.$lastQuizAttempt->name.'</a></p>';
+						}
 						if($showCharts){
 							$this->content->text  .= block_mystats_quiz_chart($quizAverage,$quizHighest,get_string('quizavgscore','block_mystats'),get_string('quizhighscore','block_mystats'),get_string('quizscores','block_mystats'),get_string('scorepercent','block_mystats'));
 						} else {
@@ -312,17 +331,16 @@ class block_mystats extends block_base {
 								$avgSize = $totalSize / $fileNumber;
 						}
 						
-						//echo $totalSize.' bytes';
-
 						//output stats
 						$this->content->text  .= '<div id="mystats_files" class="mystats_section"><h3>'.get_string('files','block_mystats').'</h3>';
+						$this->content->text  .= '<p><strong>'.get_string('totalfiles','block_mystats').': '.$fileNumber.'</strong></p>';
 						$this->content->text  .= '<p><a href="'.$CFG->wwwroot.'/user/files.php">'.get_string('fileprivate','block_mystats').'</a>: '.$privateFiles.'</p>';
 						$this->content->text  .= '<p>'.get_string('fileattached','block_mystats').': '.$attachFiles.'</p>';
 						$this->content->text  .= '<p>'.get_string('filesubmitted','block_mystats').': '.$subFiles.'</p>';
 						$this->content->text  .= '<p>'.get_string('filetotalsize','block_mystats').': '.$totalSize.' '.get_string('bytes','block_mystats').'</p>';
 						$this->content->text  .= '<p>'.get_string('fileavgsize','block_mystats').': '.$avgSize.' '.get_string('bytes','block_mystats').'</p>';
 						if($private){
-							$this->content->text  .= '<p>'.get_string('largestfile','block_mystats').' '.$largestFileName.': '.$largestFile.' '.get_string('bytes','block_mystats').'.</p>';
+							$this->content->text  .= '<p>'.get_string('largestfile','block_mystats').': '.$largestFileName.' - '.$largestFile.' '.get_string('bytes','block_mystats').'.</p>';
 						}
 						$this->content->text  .= '</div>';
 					}

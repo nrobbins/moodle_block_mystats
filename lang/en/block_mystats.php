@@ -68,6 +68,8 @@ $string['quizattempt'] = 'Quiz Attempts';
 $string['quizavgscore'] = 'Average Score';
 $string['quizhighscore'] = 'Highest Score';
 $string['quizscores'] = 'Quiz Scores';
+$string['lastattempt'] = 'Last Attempt';
+$string['noattemptsrecorded'] = 'No attempts recorded';
 //Lesson Strings
 $string['lessons'] = 'Lessons';
 $string['lessonattempt'] = 'Lesson Attempts';
@@ -87,12 +89,13 @@ $string['messagereceived'] = 'Messages Received';
 $string['messagecontacts'] = 'Messaging Contacts';
 //File Strings
 $string['files'] = 'Files';
+$string['totalfiles'] = 'Total Files';
 $string['fileprivate'] = 'Private Files';
 $string['fileattached'] = 'Attached to Posts';
 $string['filesubmitted'] = 'Submitted for Assignments';
 $string['filetotalsize'] = 'Total size of uploaded files';
-$string['fileavgsize'] = 'Average size of uploaded files';
-$string['largestfile'] = 'Largest file uploaded';
+$string['fileavgsize'] = 'Average file size';
+$string['largestfile'] = 'Largest file';
 $string['bytes'] = 'bytes';
 //Glossary Strings
 $string['glossary'] = 'Glossary';
