@@ -100,6 +100,8 @@ $string['nofiles'] = 'No files uploaded';
 $string['glossary'] = 'Glossary';
 $string['glossaryentries'] = 'Glossary entries';
 $string['glossaryapproved'] = 'Approved entries';
+$string['latestglossary'] = 'Latest entry';
+$string['noglossary'] = 'No entries contributed';
 //Other Strings
 $string['scorepercent'] = 'Score percent';
 $string['nogrades'] = 'No grades recorded';

@@ -422,19 +422,28 @@ class block_mystats extends block_base {
                 $glossaryEntries = $DB->get_records_sql('SELECT * FROM {glossary_entries} WHERE userid = ?', array($userId));
                 $glossaryTotal = count($glossaryEntries);
                 $glossaryApproved = 0;
-                if($glossaryTotal>=1){
+                $gloss_entry_time = 0;
+                if($glossaryTotal > 0){
                     foreach($glossaryEntries as $entry=>$data){
-                        foreach($data as $info=>$value){
-                            if($info=='approved'&&$value==1){
-                                $glossaryApproved++;
-                            }
+                        if($data->approved == 1){
+                            $glossaryApproved++;
+                        }
+                        if($data->timemodified > $gloss_entry_time){
+                            $gloss_entry_time = $data->timemodified;
+                            $gloss_id = $data->glossaryid;
+                            $gloss_concept = $data->concept;
                         }
                     }
                 }
                 // Output stats.
                 $this->content->text  .= '<div id="mystats_glossary" class="mystats_section"><h3>'.get_string('glossary', 'block_mystats').'</h3>';
-                $this->content->text  .= '<p>'.get_string('glossaryentries', 'block_mystats').': '.$glossaryTotal.'</p>';            
-                $this->content->text  .= '<p>'.get_string('glossaryapproved', 'block_mystats').': '.$glossaryApproved.'</p>';
+                if($glossaryTotal > 0){
+                    $this->content->text  .= '<p>'.get_string('glossaryentries', 'block_mystats').': '.$glossaryTotal.'</p>';            
+                    $this->content->text  .= '<p>'.get_string('glossaryapproved', 'block_mystats').': '.$glossaryApproved.'</p>';
+                    $this->content->text  .= '<p>'.get_string('latestglossary', 'block_mystats').': '.$gloss_concept.'</p>';
+                } else {
+                    $this->content->text  .= '<p>'.get_string('noglossary', 'block_mystats').'</p>';
+                }
                 $this->content->text  .= '</div>';
             }
         }
