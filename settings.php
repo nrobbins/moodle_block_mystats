@@ -26,77 +26,75 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-	$settings->add(new admin_setting_heading(
-		'adminheading',
-		get_string('adminheading', 'block_mystats'),
-		get_string('admintext', 'block_mystats')
-	));
+    $settings->add(new admin_setting_heading(
+        'adminheading',
+        get_string('adminheading', 'block_mystats'),
+        get_string('admintext', 'block_mystats')
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/allow_user_config',
-		get_string('allowuserconfig', 'block_mystats'),
-    get_string('allowuserconfigtext', 'block_mystats'),
-		1
-	));
+        'mystats/allow_user_config',
+        get_string('allowuserconfig', 'block_mystats'),
+        get_string('allowuserconfigtext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/allow_profile_page',
-		get_string('allowprofile', 'block_mystats'),
-    get_string('allowprofiletext', 'block_mystats'),
-		1
-	));
+        'mystats/allow_profile_page',
+        get_string('allowprofile', 'block_mystats'),
+        get_string('allowprofiletext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_charts',
-		get_string('showcharts', 'block_mystats'),
-    get_string('showchartstext', 'block_mystats'),
-		1
-	));
+        'mystats/show_charts',
+        get_string('showcharts', 'block_mystats'),
+        get_string('showchartstext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_forum',
-		get_string('showforum', 'block_mystats'),
-    get_string('showforumtext', 'block_mystats'),
-		1
-	));
+        'mystats/show_stats_forum',
+        get_string('showforum', 'block_mystats'),
+        get_string('showforumtext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_blog',
-		get_string('showblog', 'block_mystats'),
-    get_string('showblogtext', 'block_mystats'),
-		1
-	));
+        'mystats/show_stats_blog',
+        get_string('showblog', 'block_mystats'),
+        get_string('showblogtext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_quiz',
-		get_string('showquiz', 'block_mystats'),
-    get_string('showquiztext', 'block_mystats'),
-		1
-	));
+        'mystats/show_stats_quiz',
+        get_string('showquiz', 'block_mystats'),
+        get_string('showquiztext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_lesson',
-		get_string('showlesson', 'block_mystats'),
-    get_string('showlessontext', 'block_mystats'),
-		1
-	));
+        'mystats/show_stats_lesson',
+        get_string('showlesson', 'block_mystats'),
+        get_string('showlessontext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_assignment',
-		get_string('showassignment', 'block_mystats'),
-    get_string('showassignmenttext', 'block_mystats'),
-		1
-	));
+        'mystats/show_stats_assignment',
+        get_string('showassignment', 'block_mystats'),
+        get_string('showassignmenttext', 'block_mystats'),
+        1
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_msg',
-		get_string('showmsg', 'block_mystats'),
-    get_string('showmsgtext', 'block_mystats'),
-		0
-	));
+        'mystats/show_stats_msg',
+        get_string('showmsg', 'block_mystats'),
+        get_string('showmsgtext', 'block_mystats'),
+        0
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_file',
-		get_string('showfile', 'block_mystats'),
-    get_string('showfiletext', 'block_mystats'),
-		0
-	));
+        'mystats/show_stats_file',
+        get_string('showfile', 'block_mystats'),
+        get_string('showfiletext', 'block_mystats'),
+        0
+    ));
   $settings->add(new admin_setting_configcheckbox(
-		'mystats/show_stats_glossary',
-		get_string('showglossary', 'block_mystats'),
-    get_string('showglossarytext', 'block_mystats'),
-		0
-	));
+        'mystats/show_stats_glossary',
+        get_string('showglossary', 'block_mystats'),
+        get_string('showglossarytext', 'block_mystats'),
+        0
+    ));
 }
-
-
