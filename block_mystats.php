@@ -28,6 +28,9 @@ class block_mystats extends block_base {
     function init() {
         $this->title = get_string('pluginname', 'block_mystats');
     }
+
+    function has_config() {return true;}
+
     public function specialization() {
         global $CFG;
         if (!empty($this->config->title)) {
@@ -200,7 +203,7 @@ class block_mystats extends block_base {
                 $blogPostId = 0;
                 $blogPostModified = 0;
                 foreach($myBlogPosts as $post=>$info){
-                    $blogPosts++;;
+                    $blogPosts++;
                     if($info->courseid != 0){
                         $coursePosts++;
                     }

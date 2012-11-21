@@ -102,3 +102,5 @@ $string['glossaryapproved'] = 'Entradas aprobadas';
 //Other Strings
 $string['scorepercent'] = 'Puntos Porcentaje';
 $string['nogrades'] = 'No hay calificaciones registradas';
+$string['mystats:myaddinstance'] = 'Agregar un bloque My Stats a Mi Moodle';
+$string['mystats:addinstance'] = 'Agregar un bloque My Stats';
