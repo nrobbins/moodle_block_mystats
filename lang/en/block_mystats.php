@@ -105,5 +105,3 @@ $string['noglossary'] = 'No entries contributed';
 //Other Strings
 $string['scorepercent'] = 'Score percent';
 $string['nogrades'] = 'No grades recorded';
-$string['mystats:myaddinstance'] = 'Add a My Stats block to My Moodle page';
-$string['mystats:addinstance'] = 'Add a My Stats block';

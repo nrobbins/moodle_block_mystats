@@ -180,7 +180,7 @@ class block_mystats extends block_base {
                     $this->content->text  .= '<p>'.get_string('noposts', 'block_mystats').'</p>';
                 }
                 if($showCharts){
-                    $this->content->text  .= block_mystats_forum_chart($newTopics, $forumReplies, get_string('forumtopics', 'block_mystats'), get_string('forumreplies', 'block_mystats'));
+                    $this->content->text  .= block_mystats_forum_chart($newTopics, $forumReplies, get_string('forumtopics', 'block_mystats'), get_string('forumreplies', 'block_mystats'), $userId);
                 } else {
                     $this->content->text  .= '<p>'.get_string('forumtopics', 'block_mystats').': '.$newTopics.'</p>';
                     $this->content->text  .= '<p>'.get_string('forumreplies', 'block_mystats').': '.$forumReplies.'</p>';
@@ -228,7 +228,7 @@ class block_mystats extends block_base {
                     $this->content->text  .= '<p>'.get_string('noposts', 'block_mystats').'</p>';
                 }
                 if($showCharts){
-                    $this->content->text  .= block_mystats_blog_chart($blogPosts, $coursePosts, $modPosts, get_string('blogposts', 'block_mystats'),get_string('blogcourse', 'block_mystats'), get_string('blogactivity', 'block_mystats'));
+                    $this->content->text  .= block_mystats_blog_chart($blogPosts, $coursePosts, $modPosts, get_string('blogposts', 'block_mystats'),get_string('blogcourse', 'block_mystats'), get_string('blogactivity', 'block_mystats'), $userId);
                 } else {
                     $this->content->text  .= '<p>'.get_string('blogcourse', 'block_mystats').': '.$coursePosts.'</p>';
                     $this->content->text  .= '<p>'.get_string('blogactivity', 'block_mystats').': '.$modPosts.'</p>';
@@ -275,7 +275,7 @@ class block_mystats extends block_base {
                     $this->content->text  .='<p>'.get_string('lastattempt', 'block_mystats').': <a href="'.$CFG->wwwroot.'/mod/quiz/view.php?id='.$quizId->id.'">'.$lastQuizAttempt->name.'</a></p>';
                 }
                 if($showCharts){
-                    $this->content->text  .= block_mystats_quiz_chart($quizAverage, $quizHighest, get_string('quizavgscore', 'block_mystats'), get_string('quizhighscore', 'block_mystats'), get_string('quizscores', 'block_mystats'), get_string('scorepercent', 'block_mystats'));
+                    $this->content->text  .= block_mystats_quiz_chart($quizAverage, $quizHighest, get_string('quizavgscore', 'block_mystats'), get_string('quizhighscore', 'block_mystats'), get_string('quizscores', 'block_mystats'), get_string('scorepercent', 'block_mystats'), $userId);
                 } else {
                     $this->content->text  .= '<p>'.get_string('quizavgscore', 'block_mystats').': '.$quizAverage.'</p>';
                     $this->content->text  .= '<p>'.get_string('quizhighscore', 'block_mystats').': '.$quizHighest.'</p>';
@@ -319,7 +319,7 @@ class block_mystats extends block_base {
                     $this->content->text  .='<p>'.get_string('noattemptsrecorded', 'block_mystats').'</p><p>&nbsp;</p>';
                 }
                 if($showCharts){
-                    $this->content->text  .= block_mystats_quiz_chart($lessonAverage, $lessonHighest, get_string('quizavgscore', 'block_mystats'), get_string('quizhighscore', 'block_mystats'), get_string('lessonscores', 'block_mystats'), get_string('scorepercent', 'block_mystats'));
+                    $this->content->text  .= block_mystats_quiz_chart($lessonAverage, $lessonHighest, get_string('quizavgscore', 'block_mystats'), get_string('quizhighscore', 'block_mystats'), get_string('lessonscores', 'block_mystats'), get_string('scorepercent', 'block_mystats'), $userId);
                 } else {
                     $this->content->text  .= '<p>'.get_string('quizavgscore', 'block_mystats').': '.$lessonAverage.'</p>';
                     $this->content->text  .= '<p>'.get_string('quizhighscore', 'block_mystats').': '.$lessonHighest.'</p>';
@@ -344,7 +344,7 @@ class block_mystats extends block_base {
                 $this->content->text  .= '<div id="mystats_assignments" class="mystats_section"><h3>'.get_string('assignments', 'block_mystats').'</h3>';
                 $this->content->text  .= '<p>'.get_string('assignmentattempt', 'block_mystats').': '.$assignmentAttempts.'</p><p>&nbsp;</p>';
                 if($showCharts){
-                    $this->content->text  .= block_mystats_quiz_chart($assignmentAverage, $assignmentHighest, get_string('quizavgscore', 'block_mystats'), get_string('quizhighscore', 'block_mystats'), get_string('assignmentscores', 'block_mystats'), get_string('scorepercent', 'block_mystats'));
+                    $this->content->text  .= block_mystats_quiz_chart($assignmentAverage, $assignmentHighest, get_string('quizavgscore', 'block_mystats'), get_string('quizhighscore', 'block_mystats'), get_string('assignmentscores', 'block_mystats'), get_string('scorepercent', 'block_mystats'), $userId);
                 } else {
                     $this->content->text  .= '<p>'.get_string('quizavgscore', 'block_mystats').': '.$assignmentAverage.'</p>';
                     $this->content->text  .= '<p>'.get_string('quizhighscore', 'block_mystats').': '.$assignmentHighest.'</p>';

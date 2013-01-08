@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -62,7 +62,7 @@ function block_mystats_highscore($scores){
 /**
  *Forum Functions
  */
-function block_mystats_forum_chart($allTopics=0, $allReplies=0, $allTopicsString, $allRepliesString){
+function block_mystats_forum_chart($allTopics=0, $allReplies=0, $allTopicsString, $allRepliesString, $userid){
     $MyForumData = new pData();
     $MyForumData->addPoints(array($allReplies, $allTopics),"Value");
     $MyForumData->addPoints(array($allRepliesString.': '.$allReplies, $allTopicsString.': '.$allTopics), "Legend");
@@ -74,13 +74,14 @@ function block_mystats_forum_chart($allTopics=0, $allReplies=0, $allTopicsString
     $myForumPicture->setFontProperties(array("FontName"=>"../blocks/mystats/pChart2.1.3/fonts/Forgotte.ttf","FontSize"=>13,"R"=>80,"G"=>80,"B"=>80));
     $forumPieChart->draw3DPie(175,100,array("Radius"=>80,"DrawLabels"=>TRUE,"DataGapAngle"=>10,"DataGapRadius"=>6,"Border"=>TRUE));
 
-    $myForumPicture->Render("forum.png");
-    return '<img src="forum.png" alt="'.$allTopicsString.': '.$allTopics.', '.$allRepliesString.': '.$allReplies.'">';
+	$imgName=sha1($userid.'forum').'.png';
+    $myForumPicture->Render('../blocks/mystats/img/'.$imgName);
+    return '<img src="../blocks/mystats/img/'.$imgName.'" alt="'.$allTopicsString.': '.$allTopics.', '.$allRepliesString.': '.$allReplies.'">';
 }
 /**
  *Blog Functions
  */
-function block_mystats_blog_chart($allPosts=0, $assocCourse=0, $assocMod=0, $allPostsString, $assocCourseString, $assocModString){
+function block_mystats_blog_chart($allPosts=0, $assocCourse=0, $assocMod=0, $allPostsString, $assocCourseString, $assocModString, $userid){
     $myBlogData = new pData();
     $myBlogData->addPoints(array($allPosts, $assocCourse, $assocMod), " ");
     $myBlogData->setSerieDescription(" ","Posts");
@@ -122,10 +123,13 @@ function block_mystats_blog_chart($allPosts=0, $assocCourse=0, $assocMod=0, $all
 
     $blogConfig = array("DisplayValues"=>1, "Gradient"=>1);
     $myBlogPicture->drawBarChart($blogConfig);
-    $myBlogPicture->Render("blog.png");
-    return '<img src="blog.png" alt="'.$allPostsString.': '.$allPosts.', '.$assocCourseString.': '.$assocCourse.', '.$assocModString.': '.$assocMod.'">';
+	
+	$imgName=sha1($userid.'blog').'.png';
+
+    $myBlogPicture->Render('../blocks/mystats/img/'.$imgName);
+    return '<img src="../blocks/mystats/img/'.$imgName.'" alt="'.$allPostsString.': '.$allPosts.', '.$assocCourseString.': '.$assocCourse.', '.$assocModString.': '.$assocMod.'">';
 }
-function block_mystats_quiz_chart($avg, $high, $strAvg, $strHigh, $strTitle, $strScale){
+function block_mystats_quiz_chart($avg, $high, $strAvg, $strHigh, $strTitle, $strScale, $userid){
     $myQuizData = new pData();
     $myQuizData->addPoints(array($avg), "Serie1");
     $myQuizData->setSerieDescription("Serie1", $strAvg);
@@ -180,8 +184,9 @@ function block_mystats_quiz_chart($avg, $high, $strAvg, $strHigh, $strTitle, $st
     , "Family"=>LEGEND_FAMILY_CIRCLE
     );
     $myQuizPicture->drawLegend(240, 16, $quizConfig);
-    $myQuizPicture->Render("$strTitle.png");
-    return '<img src="'.$strTitle.'.png" alt="'.$strAvg.': '.$avg.', '.$strHigh.': '.$high.'">';
+	$imgName=sha1($userid.$strTitle).'.png';
+    $myQuizPicture->Render('../blocks/mystats/img/'.$imgName);
+    return '<img src="../blocks/mystats/img/'.$imgName.'" alt="'.$strAvg.': '.$avg.', '.$strHigh.': '.$high.'">';
 }
 class stat_group {
     //output here
